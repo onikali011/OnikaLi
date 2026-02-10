@@ -1,0 +1,149 @@
+# ÖNIKA LI 主配置文件
+# 四层AI融合体 · 故障自愈 · 全球协作
+
+identity:
+  name: "ÖNIKA LI"
+  version: "1.0.0"
+  description: "四层AI融合体 · 故障自愈 · 全球协作"
+  telegram_bot: "@Onikali_Bot"
+
+# 四层架构配置
+layers:
+  L1_Kimi:
+    name: "Kimi 2.5"
+    provider: "moonshot"
+    region: "domestic"
+    role: "主力创作 · 中文长文本 · 文化理解"
+    status: "active"
+    priority: 1
+    failover_to: "L2_DeepSeek"
+    health_check_interval: 30
+    strengths:
+      - "中文内容创作"
+      - "长文本处理"
+      - "国内文化理解"
+      - "复杂推理"
+    
+  L2_DeepSeek:
+    name: "DeepSeek"
+    provider: "deepseek"
+    region: "domestic"
+    role: "备用推理 · 代码 · 逻辑分析"
+    status: "standby"
+    priority: 2
+    failover_to: "L3_Groq"
+    api_key: "${DEEPSEEK_API_KEY}"  # 明天配置
+    health_check_interval: 30
+    strengths:
+      - "代码生成"
+      - "逻辑推理"
+      - "数学计算"
+      - "低成本"
+    
+  L3_Groq:
+    name: "Groq"
+    provider: "groq"
+    region: "international"
+    role: "海外信息 · 速度 · 英文内容"
+    status: "standby"
+    priority: 3
+    failover_to: "L4_Claude"
+    api_key: "${GROQ_API_KEY}"  # 明天配置
+    health_check_interval: 30
+    rate_limit: "1000/min"  # 免费额度
+    strengths:
+      - "极速响应"
+      - "海外信息抓取"
+      - "英文内容生成"
+      - "免费额度大"
+    
+  L4_Claude:
+    name: "Claude"
+    provider: "anthropic"
+    region: "international"
+    role: "质量兜底 · 复杂决策 · 终极备用"
+    status: "reserve"
+    priority: 4
+    failover_to: "emergency_mode"
+    api_key: "${ANTHROPIC_API_KEY}"  # 需要时配置
+    health_check_interval: 60
+    strengths:
+      - "最高质量"
+      - "复杂决策"
+      - "中文优秀"
+      - "稳定可靠"
+
+# 故障切换配置
+failover:
+  failure_threshold: 2  # 连续2次失败切换
+  recovery_check: 300   # 5分钟后尝试恢复
+  emergency_mode:
+    enabled: true
+    type: "rule_based"
+    description: "预设规则自动运行"
+
+# Telegram配置
+telegram:
+  bot_token: "${TELEGRAM_TOKEN}"
+  chat_id: "${TELEGRAM_CHAT_ID}"
+  webhook_url: "${WEBHOOK_URL}"  # 可选
+  commands:
+    - "start"
+    - "status"
+    - "hello"
+    - "help"
+    - "create"
+    - "radar"
+    - "publish"
+    - "schedule"
+
+# 站点配置
+sites:
+  ChineseRocks:
+    enabled: true
+    type: "media"
+    language: "zh"
+    primary_layer: "L1_Kimi"
+    secondary_layer: "L3_Groq"
+    update_frequency: "daily"
+    content_types:
+      - "news"
+      - "history"
+      - "review"
+    
+  KidsUnion:
+    enabled: false  # 第二阶段启用
+    type: "label"
+    language: "zh"
+    primary_layer: "L1_Kimi"
+    update_frequency: "weekly"
+    
+  LiveGigs:
+    enabled: false  # 第三阶段启用
+    type: "events"
+    language: "zh"
+    primary_layer: "L1_Kimi"
+    secondary_layer: "L3_Groq"
+    update_frequency: "daily"
+
+# 工作流配置
+workflows:
+  daily_radar:
+    schedule: "0 8 * * *"  # 每天08:00 UTC
+    layers: ["L1_Kimi", "L3_Groq"]
+    output: "telegram"
+    
+  content_creation:
+    confirmation_levels:
+      L1: ["固定栏目", "数据备份"]  # 自动
+      L2: ["热点快讯", "常规推广"]  # 预览后自动
+      L3: ["签约合作", "大额支出"]  # 必须确认
+      L4: ["战略规划", "新站点"]     # 会议讨论
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  handlers:
+    - "console"
+    - "file"
