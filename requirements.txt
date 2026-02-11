@@ -17,3 +17,4 @@ aiohttp==3.9.1
 # 工具库
 python-dotenv==1.0.0
 schedule==1.2.0
+pillow==10.2.0
