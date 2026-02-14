@@ -1,40 +1,52 @@
-# ÖNIKA LI - Vercel 部署指南
+# ÖNIKA LI Bot - FastAPI版本
 
-## 部署步骤
+## 🎸 四层AI融合体 · Vercel部署
 
-### 1. 更新代码
-将 `bot/onikali_bot.py` 替换为新的Webhook版本
+### 文件结构
+```
+OnikaLi/
+├── api/
+│   └── index.py          # FastAPI主程序
+├── requirements.txt      # Python依赖
+├── vercel.json          # Vercel配置
+├── setup_webhook.py     # Webhook设置脚本
+└── README.md
+```
 
-### 2. 添加配置文件
-- `vercel.json` → 根目录
-- `requirements.txt` → 根目录（如果已有则覆盖）
+### 部署步骤
 
-### 3. 注册Vercel
+#### 1. 上传文件到GitHub
+```bash
+git add .
+git commit -m "迁移到FastAPI + Vercel"
+git push
+```
+
+#### 2. Vercel部署
 - 访问 https://vercel.com
-- 用GitHub账号登录
-- 导入 `onikali011/OnikaLi` 仓库
+- 导入 `onikali011/OnikaLi`
+- 添加环境变量：
+  - `TELEGRAM_TOKEN` - Telegram Bot Token
+  - `MOONSHOT_API_KEY` - Kimi API Key
+  - `ANTHROPIC_API_KEY` - Claude API Key（可选）
+- 点击 **Deploy**
 
-### 4. 设置环境变量
-在Vercel控制台 → Settings → Environment Variables 添加：
-- `TELEGRAM_TOKEN` = 你的Bot Token
-- `MOONSHOT_API_KEY` = Kimi API Key
-- `ANTHROPIC_API_KEY` = Claude API Key（可选）
-
-### 5. 部署
-点击 Deploy，等待完成
-
-### 6. 设置Webhook
-部署完成后，运行：
+#### 3. 设置Webhook
 ```bash
 pip install requests
 python setup_webhook.py
 ```
-输入你的Vercel域名（例如：`onikali.vercel.app`）
 
-### 7. 测试
-在Telegram发送 `/start`，应该能正常回复
+#### 4. 测试
+Telegram发送 `/start`
 
-## 本地测试（可选）
-```bash
-python bot/onikali_bot.py local
-```
+### API端点
+- `GET /` - 健康检查
+- `POST /` - Telegram Webhook
+- `GET /health` - 状态检查
+
+### 特性
+- ✅ FastAPI高性能
+- ✅ 异步处理
+- ✅ 自动故障转移
+- ✅ Layer 1-4 AI融合

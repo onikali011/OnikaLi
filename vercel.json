@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "bot/onikali_bot.py",
+      "src": "api/index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/",
-      "dest": "bot/onikali_bot.py"
+      "src": "/(.*)",
+      "dest": "api/index.py"
     }
   ]
 }
