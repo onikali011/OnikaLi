@@ -21,7 +21,7 @@ from telegram.ext import (
 )
 
 # ============ 配置 ============
-TELEGRAM_TOKEN = "8256004848:AAED5v5CxrXIb-s38u6pxJIX-U4FPjh4sWc"
+TELEGRAM_TOKEN = "7983193038:AAFdH1nNjOes1SjucHa-v_gns8tCZW5KW8s"
 OPENROUTER_API_KEY = "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"
 
 # 四层AI配置 (全部走OpenRouter，免费优先)
